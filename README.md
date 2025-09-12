@@ -13,7 +13,7 @@ print(f'Привет {name}! Через год тебе будет {age + 1}')
 ``` Python
 a = float(input('a: '))
 b = float(input('b: '))
-print(f'sum={a+b}; avg={3.88}')
+print(f'sum={a+b:.2f}; avg={(a + b) / 2:.2f}')
 ```
 ![alt text](images/image-2.png)
 
