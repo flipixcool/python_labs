@@ -55,7 +55,7 @@ for i in range(n):
 print(full_time, n-full_time)
 ```
 ![alt text](images/image-6.png)
-####Задание 7*
+#### Задание 7*
 ```Python
 
 line = input()
