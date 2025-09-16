@@ -21,6 +21,7 @@ def flatten(arr):
 arr = [3, -1, 5, 5, 0]
 print(min_max(arr))
 ```
+
 ![alt text](images/image-1.1.png)
 ![alt text](images/image-1.2.png)
 ![alt text](images/image-1.3.png)
