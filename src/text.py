@@ -1,21 +1,23 @@
-﻿# ЛР2
-## Задание A
-```Python
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     if casefold:
         text = text.casefold()
     if yo2e:
         text = text.replace('Ё', 'Е').replace('ё', 'е')
+
     for i in ['\t', '\r', '\n', '\f', '\v']:
         text = text.replace(i, ' ')
+
     while '  ' in text:
         text = text.replace('  ', ' ')
+
     return text.strip()
-```
 
-![alt text](images/image-a-1.png)
+# print(normalize("ПрИвЕт\nМИр\t"))
+# print(normalize("ёжик, Ёлка"))
+# print(normalize("Hello\r\nWorld"))
+# print(normalize("  двойные   пробелы  "))
 
-```Python
+
 def tokenize(text: str) -> list[str]:
     lst = []
     current_word = []
@@ -39,11 +41,13 @@ def tokenize(text: str) -> list[str]:
     if current_word:
         lst.append(''.join(current_word))
     return lst
-```
 
-![alt text](images/image-a-2.png)
+# print(tokenize("привет мир"))
+# print(tokenize("hello,world!!!"))
+# print(tokenize("по-настоящему круто"))
+# print(tokenize("2025 год"))
+# print(tokenize("emoji 😀 не слово"))
 
-```Python
 def count_freq(tokens: list[str]) -> dict[str, int]:
     d = {}
     for word in tokens:
@@ -52,65 +56,33 @@ def count_freq(tokens: list[str]) -> dict[str, int]:
         else:
             d[word] += 1
     return dict(sorted(d.items()))
-```
 
-![alt text](images/image-a-3.png)
+# print(count_freq(["a","b","a","c","b","a"]))
+# print(count_freq(["bb","aa","bb","aa","cc"]))
 
-```Python
 def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
+    # Сортируем пары (слово, частота) по убыванию частоты
     sorted_counts = sorted(freq.items(), key=lambda item: item[1], reverse=True)
     return sorted_counts[:n]
-```
 
-![alt text](images/image-a-4.png)
-
-# Задание B
-
-```Python
-from text import tokenize, top_n, count_freq
-import sys
+# print(top_n(count_freq(["a","b","a","c","b","a"]), n=2))
+# print(top_n(count_freq(["bb","aa","bb","aa","cc"]), n=2))
 
 
-def main():
-    text = sys.stdin.read()
-    words = tokenize(text.lower())
-    freq = count_freq(words)
+# normalize
+assert normalize("ПрИвЕт\nМИр\t") == "привет мир"
+assert normalize("ёжик, Ёлка") == "ежик, елка"
 
-    print(f"Всего слов: {len(words)}")
-    print(f"Уникальных слов: {len(freq)}")
-    print("Топ-5:")
+# tokenize
+assert tokenize("привет, мир!") == ["привет", "мир"]
+assert tokenize("по-настоящему круто") == ["по-настоящему", "круто"]
+assert tokenize("2025 год") == ["2025", "год"]
 
-    for word, count in top_n(freq, 5):
-        print(f"{word}:{count}")
+# count_freq + top_n
+freq = count_freq(["a","b","a","c","b","a"])
+assert freq == {"a":3, "b":2, "c":1}
+assert top_n(freq, 2) == [("a",3), ("b",2)]
 
-
-if __name__ == "__main__":
-    main()
-```
-
-![alt text](images/image-b-1.png)
-
-
-## Задание со *
-
-```Python
-from text import tokenize, top_n, count_freq
-import sys
-
-
-def main():
-    text = sys.stdin.read()
-    words = tokenize(text.lower())
-    freq = count_freq(words)
-
-    max_width = max(len(word) for word, _ in top_n(freq, 5))
-    print(f"{'слово'.ljust(max_width)} | частота")
-    print('-' * (max_width + 10))
-    for word, count in top_n(freq, 5):
-        print(f"{word.ljust(max_width)} | {count}")
-
-if __name__ == "__main__":
-    main()
-```
-
-![alt text](images/image-point-1.png)
+# тай-брейк по слову при равной частоте
+freq2 = count_freq(["bb","aa","bb","aa","cc"])
+assert top_n(freq2, 2) == [("aa",2), ("bb",2)]
