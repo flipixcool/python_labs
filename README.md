@@ -1,4 +1,4 @@
-﻿# ЛР2
+﻿# ЛР3
 ## Задание A
 ```Python
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
@@ -89,7 +89,6 @@ if __name__ == "__main__":
 ```
 
 ![alt text](images/image-b-1.png)
-
 
 ## Задание со *
 
